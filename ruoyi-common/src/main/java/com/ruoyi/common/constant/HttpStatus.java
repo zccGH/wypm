@@ -2,7 +2,7 @@ package com.ruoyi.common.constant;
 
 /**
  * 返回状态码
- * 
+ *
  * @author ruoyi
  */
 public class HttpStatus
@@ -86,4 +86,16 @@ public class HttpStatus
      * 接口未实现
      */
     public static final int NOT_IMPLEMENTED = 501;
+    /**
+     * 图片文件为空
+     */
+    public static final int IMG_IS_NULL = 0000;
+    /**
+     * 图片格式错误
+     */
+    public static final int IMG_FORMAT_ERROR = 0001;
+    /**
+     * 图片上传错误
+     */
+    public static final int IMG_UPLOAD_ERROR = 0002;
 }

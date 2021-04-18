@@ -1,6 +1,7 @@
 package com.ruoyi.web.controller.system;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,7 +35,7 @@ import com.ruoyi.system.service.ISysUserService;
 
 /**
  * 用户信息
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -62,6 +63,16 @@ public class SysUserController extends BaseController
     {
         startPage();
         List<SysUser> list = userService.selectUserList(user);
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        if (!Objects.isNull(loginUser)) {
+            if (!"admin".equals(loginUser.getUser().getUserName())) {
+                for (int i = 0; i < list.size(); i++) {
+                    if ("admin".equals(list.get(i).getUserName())) {
+                        list.remove(i);
+                    }
+                }
+            }
+        }
         return getDataTable(list);
     }
 

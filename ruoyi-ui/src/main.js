@@ -47,7 +47,6 @@ Vue.prototype.msgInfo = function (msg) {
 // 全局组件挂载
 Vue.component('Pagination', Pagination)
 Vue.component('RightToolbar', RightToolbar)
-
 Vue.use(permission)
 
 /**

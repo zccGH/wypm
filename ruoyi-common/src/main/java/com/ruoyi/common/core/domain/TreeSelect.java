@@ -4,12 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.ruoyi.common.core.domain.entity.SysCollage;
 import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 
 /**
  * Treeselect树结构实体类
- * 
+ *
  * @author ruoyi
  */
 public class TreeSelect implements Serializable
@@ -36,6 +37,12 @@ public class TreeSelect implements Serializable
         this.id = dept.getDeptId();
         this.label = dept.getDeptName();
         this.children = dept.getChildren().stream().map(TreeSelect::new).collect(Collectors.toList());
+    }
+
+    public TreeSelect(SysCollage sysCollage){
+        this.id=sysCollage.getCollageId();
+        this.label=sysCollage.getCollageName();
+        this.children=sysCollage.getChildren().stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
     public TreeSelect(SysMenu menu)

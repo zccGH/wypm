@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysThesisMapper">
+
+    <resultMap type="SysThesis" id="SysThesisResult">
+        <result property="id"    column="id"    />
+        <result property="paperTitle"    column="paper_title"    />
+        <result property="paperWord"    column="paper_word"    />
+        <result property="paperFinished"    column="paper_finished"    />
+        <result property="paperReference"    column="paper_reference"    />
+        <result property="downloadCount"    column="download_count"    />
+        <result property="paperStatus"    column="paper_status"    />
+        <result property="paperClassify"    column="paper_classify"    />
+        <result property="paperType"    column="paper_type"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="paperPath"    column="paper_path"    />
+    </resultMap>
+
+    <sql id="selectSysThesisVo">
+        select id, paper_title, paper_word, paper_finished, paper_reference,download_count, paper_status, paper_classify, paper_type, create_by, create_time, update_by, update_time,paper_path from sys_thesis
+    </sql>
+
+    <select id="selectSysThesisList" parameterType="SysThesis" resultMap="SysThesisResult">
+        <include refid="selectSysThesisVo"/>
+        <where>
+            <if test="paperTitle != null  and paperTitle != ''"> and paper_title = #{paperTitle}</if>
+            <if test="paperWord != null "> and paper_word = #{paperWord}</if>
+            <if test="paperFinished != null "> <![CDATA[and DATE_FORMAT(paper_finished , '%Y-%m-%d')>= DATE_FORMAT(#{paperFinished}, '%Y-%m-%d')]]></if>
+            <if test="paperReference != null "> and paper_reference = #{paperReference}</if>
+            <if test="paperStatus != null  and paperStatus != ''"> and paper_status = #{paperStatus}</if>
+            <if test="paperClassify != null  and paperClassify != ''"> and paper_classify = #{paperClassify}</if>
+            <if test="paperType != null  and paperType != ''"> and paper_type = #{paperType}</if>
+            <if test="downloadCount != null"> and download_count = #{downloadCount}</if>
+        </where>
+    </select>
+
+    <select id="selectSysThesisById" parameterType="Long" resultMap="SysThesisResult">
+        <include refid="selectSysThesisVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSysThesis" parameterType="SysThesis" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_thesis
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="paperTitle != null">paper_title,</if>
+            <if test="paperWord != null">paper_word,</if>
+            <if test="paperFinished != null">paper_finished,</if>
+            <if test="paperReference != null">paper_reference,</if>
+            <if test="downloadCount != null">download_count,</if>
+            <if test="paperStatus != null">paper_status,</if>
+            <if test="paperClassify != null">paper_classify,</if>
+            <if test="paperType != null">paper_type,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="paperPath != null">paper_path,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="paperTitle != null">#{paperTitle},</if>
+            <if test="paperWord != null">#{paperWord},</if>
+            <if test="paperFinished != null">#{paperFinished},</if>
+            <if test="paperReference != null">#{paperReference},</if>
+            <if test="downloadCount != null">#{downloadCount},</if>
+            <if test="paperStatus != null">#{paperStatus},</if>
+            <if test="paperClassify != null">#{paperClassify},</if>
+            <if test="paperType != null">#{paperType},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="paperPath != null">#{paperPath},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysThesis" parameterType="SysThesis">
+        update sys_thesis
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="paperTitle != null">paper_title = #{paperTitle},</if>
+            <if test="paperWord != null">paper_word = #{paperWord},</if>
+            <if test="paperFinished != null">paper_finished = #{paperFinished},</if>
+            <if test="paperReference != null">paper_reference = #{paperReference},</if>
+            <if test="downloadCount != null">download_count = #{downloadCount},</if>
+            <if test="paperStatus != null">paper_status = #{paperStatus},</if>
+            <if test="paperClassify != null">paper_classify = #{paperClassify},</if>
+            <if test="paperType != null">paper_type = #{paperType},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="paperPath != null">paper_path = #{paperPath},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysThesisById" parameterType="Long">
+        delete from sys_thesis where id = #{id}
+    </delete>
+
+    <delete id="deleteSysThesisByIds" parameterType="String">
+        delete from sys_thesis where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
